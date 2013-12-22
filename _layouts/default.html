@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+        WebFontConfig = {
+          google: { families: [ 'Raleway:300,400:latin' ] }
+        };
+        </script>
+        <script src='http://ajax.googleapis.com/ajax/libs/webfont/1.0.31/webfont.js'></script>
+    </head>
+    <body>
+      <div class="bg"></div>
+      <div class="container">
+        {% include header.html %}
+        {{content}}
+      </div>
+    </body>
+</html>

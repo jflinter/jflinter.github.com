@@ -1,0 +1,15 @@
+---
+layout: default
+---
+
+<div class="post-container">
+  <h2>
+    {{ page.title }}
+  </h2>
+  <h3 class="meta">
+    {{ page.date | date_to_string }}
+  </h3>
+  <div class="post">
+    {{ content }}
+  </div>
+</div>
