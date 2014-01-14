@@ -35,19 +35,16 @@
 @import "blag"
 @import "post"
 
-html, body, .bg, .container
+html, body
   height: 100%
   width: 100%
-.bg
-  position: fixed
-  top: 0
-  z-index: -1
+body
   $topColor: #4A4A4A
   $bottomColor: #2B2B2B
   background-color: $topColor // Old browsers
   +background-image(linear-gradient(top, $topColor, $bottomColor))
-a
-  text-decoration: none
 .container
   padding: 5% 5px
   box-sizing: border-box
+a
+  text-decoration: none

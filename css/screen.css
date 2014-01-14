@@ -93,17 +93,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .header h2 {
   font-size: 22px;
   font-weight: 500;
+  line-height: 24px;
 }
-/* line 22, ../_sass/screen.sass */
+/* line 23, ../_sass/screen.sass */
 .header h3 {
   font-size: 20px;
   font-weight: 300;
 }
-/* line 25, ../_sass/screen.sass */
+/* line 26, ../_sass/screen.sass */
 .header h4 {
   font-size: 16px;
   line-height: 20px;
   color: gray;
+}
+/* line 30, ../_sass/screen.sass */
+.header p {
+  font-size: 16px;
+  line-height: 18px;
 }
 /* line 9, ../_sass/_header.sass */
 .header.wf-loading {
@@ -136,17 +142,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .blag-preview h2 {
   font-size: 22px;
   font-weight: 500;
+  line-height: 24px;
 }
-/* line 22, ../_sass/screen.sass */
+/* line 23, ../_sass/screen.sass */
 .blag-preview h3 {
   font-size: 20px;
   font-weight: 300;
 }
-/* line 25, ../_sass/screen.sass */
+/* line 26, ../_sass/screen.sass */
 .blag-preview h4 {
   font-size: 16px;
   line-height: 20px;
   color: gray;
+}
+/* line 30, ../_sass/screen.sass */
+.blag-preview p {
+  font-size: 16px;
+  line-height: 18px;
 }
 /* line 6, ../_sass/_blag.sass */
 .blag-preview .posts li {
@@ -163,6 +175,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   background-color: rgba(245, 245, 245, 0.9);
   max-width: 1000px;
   margin: auto;
+  margin-bottom: 20px;
   width: 70%;
 }
 /* line 16, ../_sass/screen.sass */
@@ -174,30 +187,37 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .post-container h2 {
   font-size: 22px;
   font-weight: 500;
+  line-height: 24px;
 }
-/* line 22, ../_sass/screen.sass */
+/* line 23, ../_sass/screen.sass */
 .post-container h3 {
   font-size: 20px;
   font-weight: 300;
 }
-/* line 25, ../_sass/screen.sass */
+/* line 26, ../_sass/screen.sass */
 .post-container h4 {
   font-size: 16px;
   line-height: 20px;
   color: gray;
 }
+/* line 30, ../_sass/screen.sass */
+.post-container p {
+  font-size: 16px;
+  line-height: 18px;
+}
+/* line 16, ../_sass/_post.sass */
+.post-container .post p {
+  margin: 10px 0;
+}
 
-/* line 34, ../_sass/screen.sass */
-html, body, .bg, .container {
+/* line 38, ../_sass/screen.sass */
+html, body {
   height: 100%;
   width: 100%;
 }
 
-/* line 37, ../_sass/screen.sass */
-.bg {
-  position: fixed;
-  top: 0;
-  z-index: -1;
+/* line 41, ../_sass/screen.sass */
+body {
   background-color: #4a4a4a;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4a4a4a), color-stop(100%, #2b2b2b));
   background-image: -webkit-linear-gradient(top, #4a4a4a, #2b2b2b);
@@ -206,13 +226,13 @@ html, body, .bg, .container {
   background-image: linear-gradient(top, #4a4a4a, #2b2b2b);
 }
 
-/* line 45, ../_sass/screen.sass */
-a {
-  text-decoration: none;
-}
-
-/* line 47, ../_sass/screen.sass */
+/* line 46, ../_sass/screen.sass */
 .container {
   padding: 5% 5px;
   box-sizing: border-box;
+}
+
+/* line 49, ../_sass/screen.sass */
+a {
+  text-decoration: none;
 }
