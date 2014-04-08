@@ -20,5 +20,3 @@ I've already got 3 more apps like this in the pipeline. The problems they solve:
 - "I am having trouble picking a place for dinner and want an app to just tell me where to go."
 
 I almost certainly have an app on my phone (Notes, Yelp, etc) already that I could use to solve any of those problems. But with that comes some cognitive load about how to use that tool to solve that particular problem. If I have a tool that's perfectly suited, I'll be more likely to use it.
-
-In closing: a brief list of things I'd like to 
