@@ -194,7 +194,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   box-sizing: border-box;
   background-color: rgba(245, 245, 245, 0.9);
   text-align: center;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   margin: auto;
   width: 90%;
 }
@@ -233,7 +233,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .post-container li {
   margin: 8px;
 }
-/* line 7, ../_sass/_post.sass */
+/* line 6, ../_sass/_post.sass */
+.post-container .thrilling {
+  text-align: right;
+  font-size: 14px;
+  font-style: italic;
+}
+/* line 11, ../_sass/_post.sass */
 .post-container .post p {
   font-family: "Merriweather", serif;
   font-weight: 300;
