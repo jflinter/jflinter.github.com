@@ -7,6 +7,9 @@
 @import "compass/reset"
 
 =white-round-box
+  +transition(opacity 0.24s ease-in-out)
+  .wf-loading &
+    opacity: 0
   font-family: 'Lato', sans-serif
   opacity: 1
   border-radius: 10px
@@ -40,12 +43,19 @@
 @import "blag"
 @import "post"
 
-html
+$topColor: #4A4A4A
+$bottomColor: #2B2B2B
+
+html, body, .bg
   height: 100%
-  $topColor: #4A4A4A
-  $bottomColor: #2B2B2B
+  width: 100%
+
+.bg
+  position: fixed
+  z-index: -999
   background-color: $topColor // Old browsers
   +background-image(linear-gradient(top, $topColor, $bottomColor))
+
 .container
   padding: 5% 10px
   box-sizing: border-box
