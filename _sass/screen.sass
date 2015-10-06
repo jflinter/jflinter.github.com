@@ -7,9 +7,11 @@
 @import "compass/reset"
 
 =white-round-box
-  +transition(opacity 0.24s ease-in-out)
+  +transition(all 0.2s ease-in-out)
+  transform: scale(1)
   .wf-loading &
     opacity: 0
+    transform: scale(0.95)
   font-family: 'Lato', sans-serif
   opacity: 1
   border-radius: 10px
@@ -59,5 +61,6 @@ html, body, .bg
 .container
   padding: 5% 10px
   box-sizing: border-box
-a
+a, a:visited
   text-decoration: none
+  color: #007AFF
