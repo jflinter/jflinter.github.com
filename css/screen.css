@@ -81,7 +81,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: rgba(245, 245, 245, 0.9);
+  background-color: rgba(245, 245, 245, 0.95);
   text-align: center;
   max-width: 400px;
   margin: 0 auto 30px;
@@ -126,6 +126,29 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .header li {
   margin: 8px;
 }
+/* line 43, ../_sass/screen.sass */
+.header code {
+  background: whitesmoke;
+  font-family: Hack, monospace;
+  font-size: 14px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  white-space: pre;
+}
+/* line 50, ../_sass/screen.sass */
+.header .highlight {
+  overflow-x: scroll;
+  background: whitesmoke;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+  padding: 10px 15px;
+  line-height: 18px;
+}
+/* line 58, ../_sass/screen.sass */
+.header .highlight code {
+  padding: 0;
+}
 /* line 8, ../_sass/_header.sass */
 .header .header-info img {
   border-radius: 10px;
@@ -149,7 +172,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: rgba(245, 245, 245, 0.9);
+  background-color: rgba(245, 245, 245, 0.95);
   text-align: center;
 }
 /* line 12, ../_sass/screen.sass */
@@ -192,6 +215,29 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .blag-preview li {
   margin: 8px;
 }
+/* line 43, ../_sass/screen.sass */
+.blag-preview code {
+  background: whitesmoke;
+  font-family: Hack, monospace;
+  font-size: 14px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  white-space: pre;
+}
+/* line 50, ../_sass/screen.sass */
+.blag-preview .highlight {
+  overflow-x: scroll;
+  background: whitesmoke;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+  padding: 10px 15px;
+  line-height: 18px;
+}
+/* line 58, ../_sass/screen.sass */
+.blag-preview .highlight code {
+  padding: 0;
+}
 /* line 6, ../_sass/_blag.sass */
 .blag-preview .posts li {
   line-height: 28px;
@@ -209,11 +255,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: rgba(245, 245, 245, 0.9);
+  background-color: rgba(245, 245, 245, 0.95);
   text-align: center;
-  padding: 10px 20px 20px 20px;
+  padding: 10px 30px 20px 30px;
   margin: auto;
   width: 90%;
+  text-align: left;
 }
 /* line 12, ../_sass/screen.sass */
 .wf-loading .post-container {
@@ -255,13 +302,52 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .post-container li {
   margin: 8px;
 }
-/* line 6, ../_sass/_post.sass */
+/* line 43, ../_sass/screen.sass */
+.post-container code {
+  background: whitesmoke;
+  font-family: Hack, monospace;
+  font-size: 14px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  white-space: pre;
+}
+/* line 50, ../_sass/screen.sass */
+.post-container .highlight {
+  overflow-x: scroll;
+  background: whitesmoke;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+  padding: 10px 15px;
+  line-height: 18px;
+}
+/* line 58, ../_sass/screen.sass */
+.post-container .highlight code {
+  padding: 0;
+}
+/* line 7, ../_sass/_post.sass */
+.post-container .gfyContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  padding-bottom: 30%;
+  height: 0;
+  margin: 0 auto;
+}
+/* line 14, ../_sass/_post.sass */
+.post-container .gfyContainer iframe.gfycat {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+}
+/* line 20, ../_sass/_post.sass */
 .post-container .thrilling {
   text-align: right;
   font-size: 14px;
   font-style: italic;
 }
-/* line 11, ../_sass/_post.sass */
+/* line 25, ../_sass/_post.sass */
 .post-container .post p {
   font-family: "Merriweather", serif;
   font-weight: 300;
@@ -269,13 +355,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   line-height: 20px;
 }
 
-/* line 51, ../_sass/screen.sass */
+/* line 68, ../_sass/screen.sass */
 html, body, .bg {
   height: 100%;
   width: 100%;
 }
 
-/* line 55, ../_sass/screen.sass */
+/* line 72, ../_sass/screen.sass */
 .bg {
   position: fixed;
   z-index: -999;
@@ -288,13 +374,13 @@ html, body, .bg {
   background-image: linear-gradient(to bottom, #4a4a4a, #2b2b2b);
 }
 
-/* line 61, ../_sass/screen.sass */
+/* line 78, ../_sass/screen.sass */
 .container {
   padding: 5% 10px;
   box-sizing: border-box;
 }
 
-/* line 64, ../_sass/screen.sass */
+/* line 81, ../_sass/screen.sass */
 a, a:visited {
   text-decoration: none;
   color: #007AFF;
