@@ -326,7 +326,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
 }
 /* line 7, ../_sass/_post.sass */
-.post-container .gfyContainer {
+.post-container .gif-container {
   position: relative;
   width: 100%;
   max-width: 600px;
@@ -335,19 +335,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin: 0 auto;
 }
 /* line 14, ../_sass/_post.sass */
-.post-container .gfyContainer iframe.gfycat {
+.post-container .gif-container img {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
 }
-/* line 20, ../_sass/_post.sass */
+/* line 17, ../_sass/_post.sass */
 .post-container .thrilling {
   text-align: right;
   font-size: 14px;
   font-style: italic;
 }
-/* line 25, ../_sass/_post.sass */
+/* line 22, ../_sass/_post.sass */
 .post-container .post p {
   font-family: "Merriweather", serif;
   font-weight: 300;
