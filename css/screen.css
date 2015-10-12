@@ -330,21 +330,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   position: relative;
   width: 100%;
   max-width: 600px;
-  padding-bottom: 30%;
-  height: 0;
   margin: 0 auto;
 }
-/* line 14, ../_sass/_post.sass */
+/* line 12, ../_sass/_post.sass */
 .post-container .gif-container img {
   width: 100%;
 }
-/* line 17, ../_sass/_post.sass */
+/* line 15, ../_sass/_post.sass */
 .post-container .thrilling {
   text-align: right;
   font-size: 14px;
   font-style: italic;
 }
-/* line 22, ../_sass/_post.sass */
+/* line 20, ../_sass/_post.sass */
 .post-container .post p {
   font-family: "Merriweather", serif;
   font-weight: 300;
