@@ -114,7 +114,7 @@ I hope you found this post enjoyable and (more importantly) useful! If nothing e
 
 Oh, one last thing: if you did find this post enjoyable or useful, I'd love it if you'd follow me on Twitter, where I post lots of stuff like this - I'm [@jflinter][8].
 
-Also, huge thanks to [Cameron Spickert][9] and [Mike Lazer-Walker][10] for reading drafts of this post!
+Also, huge thanks to [Cameron Spickert][9], [Mike Lazer-Walker][10], and [Ben Guo][11] for reading drafts of this post!
 
 [0]: http://blog.carbonfive.com/2011/06/20/managing-ios-configurations-per-environment-in-xcode-4/
 [1]: https://ngrok.com/
@@ -127,3 +127,4 @@ Also, huge thanks to [Cameron Spickert][9] and [Mike Lazer-Walker][10] for readi
 [8]: https://twitter.com/cameronspickert
 [9]: https://twitter.com/cameronspickert
 [10]: https://twitter.com/lazerwalker
+[11]: https://twitter.com/benzguo
