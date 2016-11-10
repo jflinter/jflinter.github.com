@@ -18,7 +18,9 @@ So, here's the plan: we'll make a new scheme that marks our build as being in a 
 
 This next part is a little boring (it just walks you through which buttons to click in Xcode), so if you'd rather watch a gif of it, do so and then skip ahead to the 🐸.
 
-<a href="/assets/letsmanagesomeschemes.gif" target="_blank"><div class='gif-container'><img src="/assets/letsmanagesomeschemes.gif"></div></a>
+<a href="/assets/letsmanagesomeschemes.gif" class='gif-container' target="_blank">
+    <img src="/assets/letsmanagesomeschemes.gif" />
+</a>
 
 So to do this, first let's create a new scheme (Product → Scheme → Manage Schemes... in Xcode, then click the "+" in the lower left) and name it `MyFancyApp-LocalDevelopment`. Make sure the "shared" box is checked (this will allow you to check this new scheme into source control, otherwise it'll just live locally on your machine). Then select it and hit "Edit...". Click the arrow next to "Build" on the left, then select "Pre-actions", then the "+" in the lower left, then select "New run script action" (side note: this workflow is really hard to discover).  Then, paste the following script in (make sure you've selected your app's target in "provide build settings from", or this won't work):
 
