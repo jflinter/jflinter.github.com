@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>This One Weird Trick Makes Developing iOS Apps Against a Local Server Way Easier</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.015/css/hack.min.css">
+
+        <script type="text/javascript">
+        WebFontConfig = {
+            typekit: { id: "rtb4iza" },
+        };
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-31221709-1', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+
+        <!-- Custom CSS -->
+        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+      <div class="bg"></div>
+      <div class="container">
+        <div class="post-container">
+  <h5 class="thrilling">Another thrilling blog post by <a href="/">Jack Flintermann</a></h5>
+  <h1>
+    This One Weird Trick Makes Developing iOS Apps Against a Local Server Way Easier
+  </h1>
+  <div class="post">
+    <p>I want to talk about something that’s always annoyed me about the iOS development process, and an elegant way to fix it.</p>
+
+<p>OK. So let’s say you’re developing an oh-so-fancy app that talks to a server - say, <code class="highlighter-rouge">api.myfancyapp.com</code>. It can be helpful to run a copy of your API server locally on your Mac, and then point your app to that instead (especially if you’re developing features in tandem in your app and on the server). So now instead we want our app to point to, say, <code class="highlighter-rouge">localhost:3000</code>. To fix this, you can create a custom <code class="highlighter-rouge">Debug</code> build configuration, and make it so that your app’s API client pulls its base URL dynamically from that build configuration. This process is fairly well-covered elsewhere (I like <a href="http://blog.carbonfive.com/2011/06/20/managing-ios-configurations-per-environment-in-xcode-4/">this blog post</a> - it’s old and written in pre-ARC objective-c, but explains everything nicely), so I won’t go into too much detail here.</p>
+
+<p>Except, what if you want to test your app on a device? While the iOS simulator is smart enough to understand that <code class="highlighter-rouge">localhost</code> means “the Mac on which the simulator is running”, if your app is running on a device it’ll try and connect to itself (and unless you’re way cleverer/insaner than I am, you probably don’t have a rails server running on your iPhone) and fail. One nice solution to this problem is to use a service like <a href="https://ngrok.com/">ngrok</a>, which allows you to forward a port from your local machine onto the public-facing internet and then connect to that instead. You could also use the awesome <a href="http://www.charlesproxy.com/">Charles Proxy</a> to redirect all traffic from your phone through your Mac. Both of these approaches have their drawbacks, though - you need to buy ngrok/Charles, need to remember to start them each time you start debugging, etc. Also, neither approach scales well when you have multiple collaborators on the same app, which I’ll address more in a second.</p>
+
+<p>Alternatively, another really clever thing you can do is to connect your Mac and your iOS device to the same WiFi network and then point your iOS device to your Mac’s <a href="https://support.apple.com/kb/PH13790?locale=en_US">“Local Network Name”</a> instead. You can see what this value is by opening the “Sharing” pane in System Preferences, or by running <code class="highlighter-rouge">scutil --get LocalHostName</code> in a terminal and appending <code class="highlighter-rouge">.local</code> to the result. So, instead of setting your app’s API client’s base URL to <code class="highlighter-rouge">localhost:3000</code>, you’d set it to something like <code class="highlighter-rouge">jacks-macbook.local</code> (that’s what my value is, anyway), and it’ll work in both the simulator and on a device!</p>
+
+<p>Except, what if you have multiple people working on the same app? You can’t just hard-code <code class="highlighter-rouge">jacks-macbook.local</code> into your app’s source code - then it won’t work for your colleagues, and they’ll change it, and you’ll get merge conflicts, and eventually all of you will get frustrated and quit your jobs (ok, hopefully not that last part). Also, this base URL is really just configuration, and shouldn’t live in your source code. So instead, we can harness the power of custom Xcode schemes. If you haven’t worked with them that much, Xcode schemes are a really nice way of defining a sort of saved, custom “launch environment” - you can specify environment variables and launch arguments to run your app with every time. Importantly, you can also specify custom scripts to run each time you build your app (for more information, there is (of course) a nice <a href="http://nshipster.com/launch-arguments-and-environment-variables/">NSHipster article</a> on this. My friend Cameron also goes into some good detail on his <a href="http://cameronspickert.com/2014/02/18/custom-launch-arguments-and-environment-variables.html">blog</a>).</p>
+
+<p>So, here’s the plan: we’ll make a new scheme that marks our build as being in a local development environment. We’ll then add a build script that, when in that environment, determines your Mac’s local network name and embed that value into your app so that it’s accessible at runtime. That way, if 2 different developers build the app with our new scheme, each copy of their app will automagically point itself to the appropriate URL.</p>
+
+<p>This next part is a little boring (it just walks you through which buttons to click in Xcode), so if you’d rather watch a gif of it, do so and then skip ahead to the 🐸.</p>
+
+<p><a href="/assets/letsmanagesomeschemes.gif" class="gif-container" target="_blank">
+    <img src="/assets/letsmanagesomeschemes.gif" />
+</a></p>
+
+<p>So to do this, first let’s create a new scheme (Product → Scheme → Manage Schemes… in Xcode, then click the “+” in the lower left) and name it <code class="highlighter-rouge">MyFancyApp-LocalDevelopment</code>. Make sure the “shared” box is checked (this will allow you to check this new scheme into source control, otherwise it’ll just live locally on your machine). Then select it and hit “Edit…”. Click the arrow next to “Build” on the left, then select “Pre-actions”, then the “+” in the lower left, then select “New run script action” (side note: this workflow is really hard to discover).  Then, paste the following script in (make sure you’ve selected your app’s target in “provide build settings from”, or this won’t work):</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>touch <span class="s2">"</span><span class="k">${</span><span class="nv">CONFIGURATION_TEMP_DIR</span><span class="k">}</span><span class="s2">/LocalDevelopmentOverridesEnabled"</span>
+</code></pre>
+</div>
+
+<p>Next, do the same thing, this time adding a script to “Post-actions” with the following contents:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>rm <span class="s2">"</span><span class="k">${</span><span class="nv">CONFIGURATION_TEMP_DIR</span><span class="k">}</span><span class="s2">/LocalDevelopmentOverridesEnabled"</span>
+</code></pre>
+</div>
+
+<p>🐸</p>
+
+<p>These two scripts simply create a file in the build’s intermediates directory (a generally OK place to put things like this) before the build starts and delete it after the build is done. Thus, we can use the presence (or absence) of this file during our build to know if we’re running in the <code class="highlighter-rouge">MyFancyApp-LocalDevelopment</code> scheme.</p>
+
+<p>Next, go to the “Build Phases” tab of your application’s settings, click the “+” in the upper left, and add a new “Run Script Build Phase” with the following contents (make sure it’s executed at the very end of the “Build Phases” section):</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">PLIST_FILE</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">TARGET_BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">CONTENTS_FOLDER_PATH</span><span class="k">}</span><span class="s2">/LocalDevelopmentOverrides.plist"</span>
+rm -f <span class="nv">$PLIST_FILE</span>
+
+<span class="k">if</span> <span class="o">[</span> -f <span class="s2">$"</span><span class="k">${</span><span class="nv">CONFIGURATION_TEMP_DIR</span><span class="k">}</span><span class="s2">/LocalDevelopmentOverridesEnabled"</span> <span class="o">]</span>
+<span class="k">then
+    </span><span class="nv">LOCAL_NETWORK_NAME</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>scutil --get LocalHostName | tr <span class="s2">"[:upper:]"</span> <span class="s2">"[:lower:]"</span><span class="k">)</span><span class="s2">.local"</span>
+    /usr/libexec/PlistBuddy -c <span class="s2">"add :localNetworkName string </span><span class="nv">$LOCAL_NETWORK_NAME</span><span class="s2">"</span> <span class="nv">$PLIST_FILE</span>
+<span class="k">fi</span>
+</code></pre>
+</div>
+
+<p>This script checks for the presence of the “are we running in the local development scheme” file, and if it’s there, it creates a new plist file named <code class="highlighter-rouge">LocalDevelopmentOverrides</code> and adds your Mac’s local network name to it under the <code class="highlighter-rouge">localNetworkName</code> field (incidentally, it does so with a nice but not-well-known tool called “PlistBuddy”, for which you can find a nice explanation <a href="http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/">here</a>. This file is created in your target’s build directory (i.e. your DerivedData folder), not your project directory, just before your application is copied onto your device (or simulator). It effectively injects a bit of configuration into your app at the last possible second. The nice thing about this approach is that it effectively makes it impossible to leak any sensitive information into your application when you’re not running in this LocalDevelopment scheme - you don’t even have a file to check into source control!</p>
+
+<p>Finally, we can look for this <code class="highlighter-rouge">LocalDevelopmentOverrides.plist</code> file in our application at runtime as follows:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">LocalDevelopmentOverrides</span> <span class="p">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">configuration</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]?</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">path</span> <span class="o">=</span> <span class="kt">NSBundle</span><span class="o">.</span><span class="nf">mainBundle</span><span class="p">()</span><span class="o">.</span><span class="nf">pathForResource</span><span class="p">(</span><span class="s">"LocalDevelopmentOverrides"</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="s">"plist"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">NSDictionary</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span> <span class="n">path</span><span class="p">)</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span>
+    <span class="p">}()</span>
+
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Then, in your application, you could do something like:</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">hostNameOverride</span> <span class="o">=</span> <span class="kt">LocalDevelopmentOverrides</span><span class="o">.</span><span class="n">configuration</span><span class="p">?[</span><span class="s">"localNetworkName"</span><span class="p">]</span> <span class="p">{</span>
+    <span class="n">myApiClient</span><span class="o">.</span><span class="n">baseUrl</span> <span class="o">=</span> <span class="s">"http://</span><span class="se">\(</span><span class="n">hostnameOverride</span><span class="se">)</span><span class="s">:3000"</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">myApiClient</span><span class="o">.</span><span class="n">baseUrl</span> <span class="o">=</span> <span class="s">"https://api.myfancyapp.com"</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Neat! Again, the nice thing about this setup is that you can kind of forget about it: all you have to do to enter “Local Development” mode is build your app in the <code class="highlighter-rouge">MyFancyApp-LocalDevelopment</code> scheme, and it’ll auto-infer your Mac’s local network name and embed it properly, etc.</p>
+
+<h2 id="bonus-round-application-transport-security">Bonus round: Application Transport Security</h2>
+
+<p>While writing this up, I ran into a small, related issue that I felt like others were likely to encounter as well. iOS9 introduces a new feature called Application Transport Security, which effectively mandates that your app only communicates over appropriately-up-to-date HTTPS connections. It’s a good thing, and it’s on by default, and you should leave it that way! Except, if you followed along with this blog post so far, it will completely and utterly break when you’re running your app in Local Development mode, as we’re connecting to our Mac over HTTP, not HTTPS (your Mac most likely isn’t configured to do that to begin with). So, you’ll get a warning like: “App Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temporary exceptions can be configured via your app’s Info.plist file.”</p>
+
+<p>Hmm, temporary exceptions you say? As it turns out, you can tell your app to not worry about HTTPS for specific domains by specifying appropriate values in your applications’s Info.plist (you can also disable App Transport Security entirely, but you shouldn’t do this. You can find more information in <a href="http://www.neglectedpotential.com/2015/06/working-with-apples-application-transport-security/">this blog post</a>). In fact, we can use all of our new Local Development tools to add the necessary information to our Info.plist just before the app is copied to your device. Thus, we’ll only whitelist your development domains when, well, in development.</p>
+
+<p>To do this, simply add another “Run Script Build Phase” in your application settings’ Build Phases tab with the following contents (which lean heavily on our new friend PlistBuddy):</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> -f <span class="s2">$"</span><span class="k">${</span><span class="nv">CONFIGURATION_TEMP_DIR</span><span class="k">}</span><span class="s2">/LocalDevelopmentOverridesEnabled"</span> <span class="o">]</span>
+<span class="k">then
+
+</span><span class="nv">INFO_PLIST</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">TARGET_BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">INFOPLIST_PATH</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">LOCAL_NETWORK_NAME</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>scutil --get LocalHostName | tr <span class="s2">"[:upper:]"</span> <span class="s2">"[:lower:]"</span><span class="k">)</span><span class="s2">.local"</span>
+
+/usr/libexec/PlistBuddy -c <span class="s2">"Add :NSAppTransportSecurity:NSExceptionDomains:</span><span class="nv">$LOCAL_NETWORK_NAME</span><span class="s2">:NSIncludesSubdomains bool true"</span> <span class="nv">$INFO_PLIST</span>
+/usr/libexec/PlistBuddy -c <span class="s2">"Add :NSAppTransportSecurity:NSExceptionDomains:</span><span class="nv">$LOCAL_NETWORK_NAME</span><span class="s2">:NSThirdPartyExceptionAllowsInsecureHTTPLoads bool true"</span> <span class="nv">$INFO_PLIST</span>
+
+<span class="k">fi
+
+</span><span class="nb">exit </span>0
+</code></pre>
+</div>
+
+<p>Two small, annoying notes here - one, it looks like App Transport Security doesn’t handle uppercase characters well, so we’re using <code class="highlighter-rouge">tr</code> to lowercase your mac’s local network name (it’s case-insensitive on the OS X side of things anyway). Two, Xcode appears to aggressively cache the generated Info.plist in your target’s build directory, meaning that these injected values might stick around longer than they should, even if you change schemes. To fix this, just add a final Run Script Build Phase, this one just before the “Copy Bundle Resources” phase, containing the line:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>rm -f <span class="s2">"</span><span class="k">${</span><span class="nv">TARGET_BUILD_DIR</span><span class="k">}</span><span class="s2">/</span><span class="k">${</span><span class="nv">INFOPLIST_PATH</span><span class="k">}</span><span class="s2">"</span>
+</code></pre>
+</div>
+
+<p>This simply deletes the cached version of that file, and forces Xcode to re-copy it during the next build.</p>
+
+<p>I hope you found this post enjoyable and (more importantly) useful! If nothing else, it demonstrates the power that custom schemes and build scripts can give you over your Xcode projects.</p>
+
+<p>Oh, one last thing: if you did find this post enjoyable or useful, I’d love it if you’d follow me on Twitter, where I post lots of stuff like this - I’m <a href="https://twitter.com/cameronspickert">@jflinter</a>.</p>
+
+<p>Also, huge thanks to <a href="https://twitter.com/cameronspickert">Cameron Spickert</a>, <a href="https://twitter.com/lazerwalker">Mike Lazer-Walker</a>, and <a href="https://twitter.com/benzguo">Ben Guo</a> for reading drafts of this post!</p>
+
+
+  </div>
+  <h5 class="thrilling">
+    Originally published October 08, 2015
+  </h5>
+</div>
+
+      </div>
+    </body>
+</html>
