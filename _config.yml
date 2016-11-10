@@ -1,4 +1,4 @@
 name: Jack Flintermann
-markdown: redcarpet
+markdown: kramdown
 highlighter: pygments
 permalink: none
