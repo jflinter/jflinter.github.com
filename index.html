@@ -1,72 +1,71 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Jack Flintermann</title>
-        <meta name="viewport" content="width=device-width">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jack Flintermann Reed</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.015/css/hack.min.css">
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            background: #fff;
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
 
-        <script type="text/javascript">
-        WebFontConfig = {
-            typekit: { id: "rtb4iza" },
-        };
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
 
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        .bio {
+            color: #777;
+            margin-bottom: 2rem;
+        }
 
-          ga('create', 'UA-31221709-1', 'auto');
-          ga('send', 'pageview');
+        .bio a { color: #555; }
+        .bio a:hover { color: #1a1a1a; }
 
-        </script>
+        h2 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #999;
+            margin-bottom: 0.75rem;
+        }
 
-        <!-- Custom CSS -->
-        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-      <div class="bg"></div>
-      <div class="container">
-        <div class="header">
-  <div class="header-info">
-    <img class="main-photo" src="/assets/jack.jpeg" alt="Jack Flintermann" />
-    <h1 class="name">
-      Jack Flintermann
-    </h1>
-    <h3 class="hello">
-      Hi, I'm Jack! I live in New York and write software for <a href='https://stripe.com'>Stripe</a>. You can say hello on Twitter at <a href='https://twitter.com/jflinter'>@jflinter</a>.
-    </h3>
-  </div>
-</div>
+        section { margin-bottom: 2rem; }
 
-<div class="header">
-  <h2>
-    Projects
-  </h2>
-  <ul class="projects">
-    <li>
-      <h4><a href="https://github.com/jflinter/Dwifft">Dwifft</a></h4>
-      <h5>A fast array diffing algorithm, written in Swift.</h5>
-    </li>
-    <li>
-      <h4><a href="https://github.com/jflinter/Resourceful">Resourceful</a></h4>
-      <h5>A small command-line that helps you avoid typos when loading resources in an iOS/OS X app.</h5>
-    </li>
-    <li>
-      <h4><a href="https://github.com/jflinter/JRFMemoryNoodler">JRFMemoryNoodler</a></h4>
-      <h5>A tool for detecting when iOS kills your application due to memory pressure.</h5>
-    </li>
-  </ul>
-</div>
+        ul { list-style: none; }
 
+        li { margin-bottom: 0.5rem; }
 
-      </div>
-    </body>
+        a { color: #1a1a1a; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .desc { color: #999; }
+
+        @media (prefers-color-scheme: dark) {
+            body { background: #111; color: #e5e5e5; }
+            .bio { color: #999; }
+            .bio a { color: #bbb; }
+            .bio a:hover { color: #e5e5e5; }
+            a { color: #e5e5e5; }
+            h2 { color: #666; }
+            .desc { color: #666; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Jack Flintermann Reed</h1>
+    <p class="bio">
+        I'm a software engineer and product person living in NYC. Currently building <a href="https://increase.com">Increase</a>, a bank with a good API. Before that I worked at <a href="https://stripe.com">Stripe</a>. On the side, I like to make games, like <a href="https://lifeforc.es">Life Forces</a>, <a href="https://highphone.app">high phone</a>, and <a href="https://aholenew.world">Cyberhole 2021</a>.
+    </p>
+</body>
 </html>
