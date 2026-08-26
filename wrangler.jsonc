@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jackreed-computer",
+  "compatibility_date": "2026-08-26",
+
+  // Assets-only Worker: there is no `main` and no ASSETS binding because this
+  // site has no server side. Astro builds fully static output into ./dist and
+  // Cloudflare serves it directly.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  // Deploying provisions the DNS records and SSL certs automatically. The zone
+  // must be active on Cloudflare and must NOT already have conflicting records
+  // for these hostnames.
+  "routes": [
+    { "pattern": "jackreed.computer", "custom_domain": true },
+    { "pattern": "www.jackreed.computer", "custom_domain": true }
+  ]
+}

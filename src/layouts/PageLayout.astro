@@ -1,0 +1,161 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  frontmatter?: { title: string; description?: string };
+}
+
+// When used via an MDX file's `layout:` frontmatter key, Astro passes the
+// frontmatter object rather than individual props.
+const { title, description } = Astro.props.frontmatter ?? Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <h1>{title}</h1>
+  <article class="prose">
+    <slot />
+  </article>
+  <p class="back"><a href="/">&larr; jackreed.computer</a></p>
+</BaseLayout>
+
+<style>
+  /* global.css resets every margin and strips list markers, which is right for
+     the homepage but wrong for prose. Restore it, scoped to page content only.
+     Descendants come from <slot>, so they need :global() to be reached. */
+  .prose {
+    margin-bottom: 3rem;
+  }
+
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol),
+  .prose :global(blockquote),
+  .prose :global(pre),
+  .prose :global(figure) {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose :global(h2),
+  .prose :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    text-transform: none;
+    letter-spacing: normal;
+    color: inherit;
+  }
+
+  .prose :global(h2) {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .prose :global(h3) {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.25rem;
+  }
+
+  .prose :global(ul) {
+    list-style: disc;
+  }
+
+  .prose :global(ol) {
+    list-style: decimal;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.25rem;
+  }
+
+  .prose :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid #ddd;
+    padding-left: 1rem;
+    color: #777;
+  }
+
+  .prose :global(code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875em;
+    background: #f4f4f4;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+  }
+
+  .prose :global(pre) {
+    background: #f4f4f4;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .prose :global(img),
+  .prose :global(video),
+  .prose :global(canvas),
+  .prose :global(svg) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 2rem 0;
+  }
+
+  .back {
+    font-size: 0.9rem;
+    color: #999;
+  }
+
+  .back a {
+    color: #999;
+  }
+
+  .back a:hover {
+    color: #1a1a1a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .prose :global(blockquote) {
+      border-left-color: #333;
+      color: #999;
+    }
+
+    .prose :global(code) {
+      background: #1e1e1e;
+    }
+
+    .prose :global(pre) {
+      background: #1e1e1e;
+    }
+
+    .prose :global(hr) {
+      border-top-color: #333;
+    }
+
+    .back,
+    .back a {
+      color: #666;
+    }
+
+    .back a:hover {
+      color: #e5e5e5;
+    }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+layout: ../layouts/PageLayout.astro
+title: Hello Astro
+description: A test page proving the MDX and React island pipeline works.
+---
+
+import Demo from '../components/Demo.tsx';
+
+This page exists to prove the pipeline works. It's an `.mdx` file in `src/pages/`,
+which is all it takes to get a URL — nothing else was registered anywhere.
+
+Prose is just markdown, with the usual things:
+
+- lists
+- `inline code`
+- [links](https://increase.com)
+
+And below is a React component imported into the page and hydrated with
+`client:visible`, so its JavaScript loads only when it scrolls into view:
+
+<Demo client:visible />
+
+The homepage ships no JavaScript at all. This page ships only what the island
+above needs.
