@@ -6,11 +6,14 @@ Served from Cloudflare Workers static assets.
 ## Commands
 
 ```
-pnpm dev      # dev server
-pnpm build    # -> dist/
-pnpm preview  # wrangler dev; serves dist/ through the real Workers asset runtime
-pnpm deploy   # build + wrangler deploy (rarely needed by hand — see below)
+pnpm dev          # dev server
+pnpm build        # -> dist/
+pnpm preview      # wrangler dev; serves dist/ through the real Workers asset runtime
+pnpm run deploy   # build + wrangler deploy (rarely needed by hand — see below)
 ```
+
+`pnpm run deploy`, not `pnpm deploy` — the latter is a reserved pnpm builtin and
+errors with `ERR_PNPM_CANNOT_DEPLOY`.
 
 Use `pnpm preview`, not just `pnpm dev`, to check anything routing-related —
 trailing slashes and 404 status codes only behave correctly under the Workers
